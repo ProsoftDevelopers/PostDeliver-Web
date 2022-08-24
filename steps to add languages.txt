@@ -1,0 +1,18 @@
+steps add languages
+
+1) Copy paste in application hooks folder LanguageLoader.php
+2) Copy paste application/languages - all languages folder
+3) application/config/config.php - $config['enable_hooks'] = FALSE; to $config['enable_hooks'] = TRUE;
+4) application/config/hooks.php - Add below lines,
+
+$hook['post_controller_constructor'] = array(
+  'class' => 'LanguageLoader',
+  'function' => 'initialize',
+  'filename' => 'LanguageLoader.php',
+  'filepath' => 'hooks'
+);
+
+?>
+
+5) Make changes in controller
+6) Make changes in Views
