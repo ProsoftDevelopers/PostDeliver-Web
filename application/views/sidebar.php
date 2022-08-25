@@ -35,6 +35,17 @@
 					</p>
 				</a>
 			</li>
+
+			<li class="nav-item">
+				<a href="<?php echo base_url(); ?>index.php/MonitorQuarantinec/set_monitor_quarantine" class="nav-link">
+					<i class="nav-icon fa fa-eye"></i>
+					<p>
+						<?php echo $this->lang->line('monitor_quarantine') ?>
+						<!--<span class="right badge badge-danger">New</span>-->
+					</p>
+				</a>
+			</li>
+			
 			<li class="nav-item">
 				<a href="<?php echo base_url(); ?>index.php/RegisterCasec/set_register_case" class="nav-link">
 					<i class="nav-icon fa fa-key"></i>
@@ -53,15 +64,7 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="<?php echo base_url(); ?>index.php/MonitorQuarantinec/set_monitor_quarantine" class="nav-link">
-					<i class="nav-icon fa fa-eye"></i>
-					<p>
-						<?php echo $this->lang->line('monitor_quarantine') ?>
-						<!--<span class="right badge badge-danger">New</span>-->
-					</p>
-				</a>
-			</li>
+			
 			<li class="nav-item">
 				<a href="<?php echo base_url(); ?>index.php/Alertc/set_alert" class="nav-link">
 					<i class="nav-icon fa fa-bell"></i>

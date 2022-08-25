@@ -66,8 +66,18 @@
 		
 		tr.row_selected td{background-color:#0072BC !important;}
 		
-		th { font-size: 12px; }
-		td { font-size: 12px; }
+		/* th { font-size: 12px; }
+		td { font-size: 12px; } */
+
+		th { font-size: 12px; white-space: nowrap;}
+		td { font-size: 12px; white-space: nowrap; }
+
+		.img-responsive {
+		width: auto;
+		height: 100px;
+		cursor: pointer;
+  		}
+		
     </style>
 	
 	<!--<script type="text/javascript" src="http://maps.google.com.mx/maps/api/js?v=3"></script>--> <!-- ?&key=AIzaSyDTcUAabUdy75i8OpRkMhnBH5v0pn_swMs -->    
@@ -101,10 +111,10 @@
 		<section class="content">
 		  <div class="container-fluid">
 			<!-- Main row -->
-			<div class="row">
+			<div class="row ">
 			  <!-- Left col -->
-			  <section class="col-lg-6 connectedSortable">
-				<div class="card">
+			  <section class="col-lg-6 connectedSortable mb-4 ">
+				<div class="card h-100 ">
 				  <div class="card-header">
 					<h3 class="card-title">
 					  <i class="ion-map mr-1"></i>
@@ -128,8 +138,8 @@
 				  </div>
 				</div>
 			  </section>	
-			  <section class="col-lg-6 connectedSortable">
-				<div class="card">
+			  <section class="col-lg-6 connectedSortable mb-4">
+				<div class="card h-100">
 				  <div class="card-header">
 					<h3 class="card-title">
 					  <i class="fas fa-map-marker-alt mr-1"></i>
@@ -151,7 +161,7 @@
 					</table>
 				  </div>
 				</div>
-				<div class="card">
+				<div class="card d-none">
 				  <div class="card-header">
 					<h3 class="card-title">
 					  <i class="ion-shuffle mr-1"></i>
@@ -174,6 +184,36 @@
 				  </div>
 				</div>
 			  </section>
+
+			  <!-- display images in grid -->
+			  <section class="col-sm-12 connectedSortable">
+				<div class="card" id="history_images">
+					<div class="card-header">
+						Images
+					</div>
+					<div class="card-body">
+
+					</div>
+				</div>
+			  </section>
+
+
+			   <!-- display images in fullscreen mode -->
+			   <div class="modal fade"  data-backdrop="static" data-keyboard="false" id="imageModal" tabindex="-1" role="dialog"
+                aria-labelledby="imageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg"   role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="image-Modal-title">Full screen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body" id="image-modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
 			</div>
 			<!-- /.row (main row) -->
 		  </div><!-- /.container-fluid -->
@@ -214,18 +254,92 @@
 		
 		////////////////////////////////////
 		// START DB OPERATIONS
-		
-		function getQuarantineData(){
+
+
+
+
+		//show images in full screen mode
+		function showFullScreen (props){
+			
+			var response = "";
+
+			if(props) {
+
+				response += "<img class='img-fluid w-100' alt='"+$(props).attr("alt")+"' src='"+$(props).attr("src")+"' />"
+			}
+			
+			$('#image-modal-body').html(response);
+			$('#imageModal').modal('show');
+		}
+
+
+		//get history images based on mobileNo
+		function get_history_images(mobile_no){
+			
 			$.ajax({ 
 			   method: "POST", 			   
-			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_quarantine_data",
+			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_history_images",
+			   data: { "mobile_no": mobile_no ? mobile_no :"" }
+			 }).done(function( data ) {
+
+
+				
+				if(data != "110") {
+
+					var response= "<div class='row'>";
+					var json_obj = jQuery.parseJSON(data);
+
+					for (let index = 0; index < json_obj.length; index++) {
+
+						response += "<div class='col-sm-2'><div class='card'><img onclick='showFullScreen(this)'  class='img-responsive' src='"+json_obj[index].url+"' alt='"+json_obj[index].filename+"' /></div></div>"
+			
+					}
+
+				
+					response+="<div>";
+
+
+					$("#history_images .card-body").html(response);
+				}
+				else
+				 {
+					$("#history_images .card-body").html("testing");
+				 }
+			 });
+
+
+		}
+		
+		function getQuarantineData(){
+
+			// $.ajax({ 
+			//    method: "POST", 			   
+			//    url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_quarantine_data",
+			//  }).done(function( data ) {
+			// 	processDBData(data);
+				
+			// 	//document.getElementById("person_details_loader").style.display = "none";
+			// 	//document.getElementById("person_details").style.display = "block";
+			// 	//document.getElementById("person_details").style.cursor = "pointer";
+			//  });
+
+
+			$.ajax({ 
+			   method: "POST", 			   
+			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_movements_data",
+
 			 }).done(function( data ) {
 				processDBData(data);
+				
+				//get all history_images
+				// get_history_images("");
 				
 				//document.getElementById("person_details_loader").style.display = "none";
 				//document.getElementById("person_details").style.display = "block";
 				//document.getElementById("person_details").style.cursor = "pointer";
 			 });
+
+
 		}
 	   
 	   function processDBData(data){
@@ -237,60 +351,89 @@
 				
 			  /* from result create a string of data and append to the div */
 			  if (json_obj.length > 0){
-				for(var row = 0; row < json_obj.length; row++){					
-					var date_of_arrival = json_obj[row].date_of_arrival; 
-					var date_until_quarantined = json_obj[row].date_until_quarantined; 
-					var country_of_origin_of_journey = json_obj[row].country_of_origin_of_journey; 
-					var port_of_origin_of_journey = json_obj[row].port_of_origin_of_journey; 
-					var port_of_final_destination = json_obj[row].port_of_final_destination; 
-					var country_of_final_destination = json_obj[row].country_of_final_destination; 
-					var address = json_obj[row].address; 
-					var district_city = json_obj[row].district_city; 
-					var state_ut_province = json_obj[row].state_ut_province; 
-					var pin = json_obj[row].pin; 
-					var country = json_obj[row].country; 
-					var final_district_city = json_obj[row].final_district_city; 
-					var latitude = json_obj[row].latitude; 
-					var longitude = json_obj[row].longitude;  
-					var traveller_patient_name = json_obj[row].traveller_patient_name; 
-					var mobile_no = json_obj[row].mobile_no; 
-					var imei = json_obj[row].imei; 
-					var device_id = json_obj[row].device_id; 
-					var last_latitude = json_obj[row].last_latitude; 
-					var last_longitude = json_obj[row].last_longitude; 
-					var gender = json_obj[row].gender;
+				for(var row = 0; row < json_obj.length; row++){			
 					
-					qGridData.push([mobile_no, traveller_patient_name, date_of_arrival, date_until_quarantined, latitude, longitude, gender]);
+					var entity_name = json_obj[row].entity_name;
+					var address = json_obj[row].address;
+					var district_city = json_obj[row].district_city;
+					var state_ut_province = json_obj[row].state_ut_province;
+					var pin = json_obj[row].pin;
+					var datetime_of_arrival = json_obj[row].p_time_stamp;
+					var latitude = json_obj[row].h_latitude;
+					var longitude = json_obj[row].h_longitude;
+					var mobile_no = json_obj[row].mobile_no;
+
+
+					// var date_of_arrival = json_obj[row].date_of_arrival; 
+					// var date_until_quarantined = json_obj[row].date_until_quarantined; 
+					// var country_of_origin_of_journey = json_obj[row].country_of_origin_of_journey; 
+					// var port_of_origin_of_journey = json_obj[row].port_of_origin_of_journey; 
+					// var port_of_final_destination = json_obj[row].port_of_final_destination; 
+					// var country_of_final_destination = json_obj[row].country_of_final_destination; 
+					// var address = json_obj[row].address; 
+					// var district_city = json_obj[row].district_city; 
+					// var state_ut_province = json_obj[row].state_ut_province; 
+					// var pin = json_obj[row].pin; 
+					// var country = json_obj[row].country; 
+					// var final_district_city = json_obj[row].final_district_city; 
+					// var latitude = json_obj[row].latitude; 
+					// var longitude = json_obj[row].longitude;  
+					// var traveller_patient_name = json_obj[row].traveller_patient_name; 
+					// var mobile_no = json_obj[row].mobile_no; 
+					// var imei = json_obj[row].imei; 
+					// var device_id = json_obj[row].device_id; 
+					// var last_latitude = json_obj[row].last_latitude; 
+					// var last_longitude = json_obj[row].last_longitude; 
+					// var gender = json_obj[row].gender;
 					
-					var notification = "<B>Date Of Arrival = </B>" + date_of_arrival +										
-										"<br><B>Date Until Quarantined = </B>" + date_until_quarantined +
-										"<br><B>Country Of Origin Of Journey = </B>" + country_of_origin_of_journey +
-										"<br><B>Port Of Origin Of Journey = </B>" + port_of_origin_of_journey +
-										"<br><B>Port Of Final Destination = </B>" + port_of_final_destination +
-										"<br><B>Country Of Final Destination = </B>" + country_of_final_destination +
+					// qGridData.push([mobile_no, traveller_patient_name, date_of_arrival, date_until_quarantined, latitude, longitude, gender]);
+					
+					// var notification = "<B>Date Of Arrival = </B>" + date_of_arrival +										
+					// 					"<br><B>Date Until Quarantined = </B>" + date_until_quarantined +
+					// 					"<br><B>Country Of Origin Of Journey = </B>" + country_of_origin_of_journey +
+					// 					"<br><B>Port Of Origin Of Journey = </B>" + port_of_origin_of_journey +
+					// 					"<br><B>Port Of Final Destination = </B>" + port_of_final_destination +
+					// 					"<br><B>Country Of Final Destination = </B>" + country_of_final_destination +
+					// 					"<br><B>Address = </B>" + address +
+					// 					"<br><B>District City = </B>" + district_city +
+					// 					"<br><B>State/UT/Province = </B>" + state_ut_province +
+					// 					"<br><B>Pin = </B>" + pin +
+					// 					"<br><B>Country = </B>" + country +
+					// 					"<br><B>Final District City = </B>" + final_district_city +
+					// 					"<br><B>Latitude = </B>" + latitude +
+					// 					"<br><B>Longitude = </B>" + longitude +
+					// 					"<br><B>Traveller Patient Name = </B>" + traveller_patient_name +
+					// 					"<br><B>Mobile No = </B>" + mobile_no +
+					// 					"<br><B>IMEI = </B>" + imei +
+					// 					"<br><B>Device ID = </B>" + device_id +
+					// 					"<br><B>Last Latitude = </B>" + last_latitude +
+					// 					"<br><B>Last Longitude = </B>" + last_longitude +
+					// 					"<br><B>Gender = </B>" + gender +
+					// 					"<br><button type='button' onclick='getMovements("+ mobile_no +")'>Show History</button>";
+					
+
+					 qGridData.push([mobile_no,entity_name, address, district_city, state_ut_province, pin, datetime_of_arrival, latitude,longitude]);
+
+					var notification = "<B>Mobile No = </B>" + mobile_no +	
+										"<br><B>Entity Name = </B>" + entity_name +											
 										"<br><B>Address = </B>" + address +
 										"<br><B>District City = </B>" + district_city +
-										"<br><B>State/UT/Province = </B>" + state_ut_province +
+										"<br><B>State_ut_province = </B>" + state_ut_province +
 										"<br><B>Pin = </B>" + pin +
-										"<br><B>Country = </B>" + country +
-										"<br><B>Final District City = </B>" + final_district_city +
+										"<br><B>DateTime of Arrival = </B>" + datetime_of_arrival +
 										"<br><B>Latitude = </B>" + latitude +
-										"<br><B>Longitude = </B>" + longitude +
-										"<br><B>Traveller Patient Name = </B>" + traveller_patient_name +
-										"<br><B>Mobile No = </B>" + mobile_no +
-										"<br><B>IMEI = </B>" + imei +
-										"<br><B>Device ID = </B>" + device_id +
-										"<br><B>Last Latitude = </B>" + last_latitude +
-										"<br><B>Last Longitude = </B>" + last_longitude +
-										"<br><B>Gender = </B>" + gender +
-										"<br><button type='button' onclick='getMovements("+ mobile_no +")'>Show History</button>";
+										"<br><B>Longitude = </B>" + longitude ;
+								
 					
+				
+
 					if (pushpins != "")
 					{
 						pushpins += "$$$$";
 					}
 					
 					pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
+
 				}
 			  }
 			  
@@ -308,14 +451,40 @@
 							 getMovements(sMobileNo);
 						});
 					},
+					// "aoColumns": [
+					// 	{ "sTitle": "Mobile No" },
+					// 	{ "sTitle": "Patient Name" },
+					// 	{ "sTitle": "Date Of Arrival" },
+					// 	{ "sTitle": "Date Until Quarantined" },
+					// 	{ "sTitle": "Latitude" },
+					// 	{ "sTitle": "Longitude" },
+					// 	{ "sTitle": "Gender" }
+					// 	/*
+					// 	{
+					// 		"sTitle": "Gender",
+					// 		"sClass": "center",
+					// 		"fnRender": function(obj) {
+					// 			var sReturn = obj.aData[ obj.iDataColumn ];
+					// 			if ( sReturn == "A" ) {
+					// 				sReturn = "<b>A</b>";
+					// 			}
+					// 			return sReturn;
+					// 		}
+					// 	}
+					// 	*/
+					// ]
+
 					"aoColumns": [
 						{ "sTitle": "Mobile No" },
-						{ "sTitle": "Patient Name" },
-						{ "sTitle": "Date Of Arrival" },
-						{ "sTitle": "Date Until Quarantined" },
+						{ "sTitle": "Entity Name" },
+						{ "sTitle": "Address" },
+						{ "sTitle": "District City" },
+						{ "sTitle": "State_ut_province" },
+						{ "sTitle": "Pin" },
+						{ "sTitle": "DateTime of Arrival" },
 						{ "sTitle": "Latitude" },
-						{ "sTitle": "Longitude" },
-						{ "sTitle": "Gender" }
+						{ "sTitle": "Longitude" }
+						
 						/*
 						{
 							"sTitle": "Gender",
@@ -368,6 +537,9 @@
 		  document.getElementById("movement_details_loader").style.display = "block";
 		  document.getElementById("movement_details").style.display = "none";
 		  */
+
+		 
+		
 		  
 		  $.ajax({ 
 		   method: "POST", 			   
@@ -379,6 +551,9 @@
 				alert("No records found.");
 			}else{
 				showMovements(data);
+
+				//get history images based on mobile No
+				get_history_images(mobile_no);
 				//document.getElementById("movement_details_loader").style.display = "none";
 				//document.getElementById("movement_details").style.display = "block";
 			}
@@ -401,96 +576,125 @@
 		  /* from result create a string of data and append to the div */
 			if (json_obj.length > 0){
 				for(var row = 0; row < json_obj.length; row++){		
-					
-				
-				
 
-					var p_time_stamp = json_obj[row]['p_time_stamp']; 
-					var latitude = json_obj[row].latitude; 
-					var longitude = json_obj[row].longitude; 						
-					var mobile_no = json_obj[row].mobile_no; 
-					var movementSource = json_obj[row].movement_source1; 
-					
-					mGridData.push([(row + 1), p_time_stamp, latitude, longitude, mobile_no, movementSource]);
+					var entity_name = json_obj[row].entity_name;
+					var address = json_obj[row].address;
+					var district_city = json_obj[row].district_city;
+					var state_ut_province = json_obj[row].state_ut_province;
+					var pin = json_obj[row].pin;
+					var datetime_of_arrival = json_obj[row].p_time_stamp;
+					var latitude = json_obj[row].h_latitude;
+					var longitude = json_obj[row].h_longitude;
+					var mobile_no = json_obj[row].mobile_no;
 
-				
 
-					var notification = "<B>Time Stamp = </B>" + p_time_stamp +									
+					mGridData.push([mobile_no,entity_name, address, district_city, state_ut_province, pin, datetime_of_arrival, latitude,longitude]);
+
+
+					var notification = "<B>Mobile No = </B>" + mobile_no +	
+										"<br><B>Entity Name = </B>" + entity_name +											
+										"<br><B>Address = </B>" + address +
+										"<br><B>District City = </B>" + district_city +
+										"<br><B>State_ut_province = </B>" + state_ut_province +
+										"<br><B>Pin = </B>" + pin +
+										"<br><B>DateTime of Arrival = </B>" + datetime_of_arrival +
 										"<br><B>Latitude = </B>" + latitude +
-										"<br><B>Longitude = </B>" + longitude +
-										"<br><B>Mobile No = </B>" + mobile_no +
-										"<br><B>Movement Source = </B>" + movementSource;
-					
+										"<br><B>Longitude = </B>" + longitude ;
+
+
 					if (pushpins != "")
 					{
 						pushpins += "$$$$";
 					}
+					
+					pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
+					
+					// var p_time_stamp = json_obj[row]['p_time_stamp']; 
+					// var latitude = json_obj[row].latitude; 
+					// var longitude = json_obj[row].longitude; 						
+					// var mobile_no = json_obj[row].mobile_no; 
+					// var movementSource = json_obj[row].movement_source1; 
+					
+					// mGridData.push([(row + 1), p_time_stamp, latitude, longitude, mobile_no, movementSource]);
+
+				
+
+					// var notification = "<B>Time Stamp = </B>" + p_time_stamp +									
+					// 					"<br><B>Latitude = </B>" + latitude +
+					// 					"<br><B>Longitude = </B>" + longitude +
+					// 					"<br><B>Mobile No = </B>" + mobile_no +
+					// 					"<br><B>Movement Source = </B>" + movementSource;
+					
+					// if (pushpins != "")
+					// {
+					// 	pushpins += "$$$$";
+					// }
 											
-					var color = "red";
-					if (movementSource === "BASE"){
-						color = "green";
-					} else if (movementSource === "CDR"){
-						color = "blue";
-					}
+					// var color = "red";
+					// if (movementSource === "BASE"){
+					// 	color = "green";
+					// } else if (movementSource === "CDR"){
+					// 	color = "blue";
+					// }
 					
-					pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + color + "$$$" + movementSource;
+					// pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + color + "$$$" + movementSource;
 					
-					if ((row + 1) < json_obj.length){
-						var latitudePlusOne = json_obj[row + 1].latitude; 
-						var longitudePlusOne = json_obj[row + 1].longitude; 
+					// if ((row + 1) < json_obj.length){
+					// 	var latitudePlusOne = json_obj[row + 1].latitude; 
+					// 	var longitudePlusOne = json_obj[row + 1].longitude; 
 					
-						if (lines != "")
-						{
-							lines += "$$$$";
-						}
+					// 	if (lines != "")
+					// 	{
+					// 		lines += "$$$$";
+					// 	}
 						
-						lines += latitude + "$$$" + longitude + "$$$" + latitudePlusOne + "$$$" + longitudePlusOne + "$$$" + color;
-					}
+					// 	lines += latitude + "$$$" + longitude + "$$$" + latitudePlusOne + "$$$" + longitudePlusOne + "$$$" + color;
+					// }
 				}
 			}
 			
-			if (oTable == null || oTable == "undefined"){
-				oTable = $('#MovementGrid').dataTable( {
-					"aLengthMenu": [[5, 10], [5, 10]],
-					"sScrollX": "100%",
-					"sScrollXInner": "110%",
-					"initComplete": function () {
-						$("#MovementGrid").on("click", "tr[role='row']", function(){
-							$("#MovementGrid tbody tr").removeClass('row_selected');        
-							$(this).addClass('row_selected');
+			// if (oTable == null || oTable == "undefined"){
+			// 	oTable = $('#MovementGrid').dataTable( {
+			// 		"aLengthMenu": [[5, 10], [5, 10]],
+			// 		"sScrollX": "100%",
+			// 		"sScrollXInner": "110%",
+			// 		"initComplete": function () {
+			// 			$("#MovementGrid").on("click", "tr[role='row']", function(){
+			// 				$("#MovementGrid tbody tr").removeClass('row_selected');        
+			// 				$(this).addClass('row_selected');
 			
-							//var index = $(this).index();
-							var sIndex = $(this).children('td:first-child').text();
-							var index = parseInt(sIndex) - 1;
-							showTooltipFromBackend(index);
-						});
-					},
-					"aoColumns": [
-						{ "sTitle": "Sl No" },
-						{ "sTitle": "Time Stamp" },
-						{ "sTitle": "Latitude" },
-						{ "sTitle": "Longitude" },
-						{ "sTitle": "Mobile No" },
-						{ "sTitle": "Movement Source" }
-						/*
-						{
-							"sTitle": "Movement Source",
-							"sClass": "center",
-							"fnRender": function(obj) {
-								var sReturn = obj.aData[ obj.iDataColumn ];
-								if ( sReturn == "A" ) {
-									sReturn = "<b>A</b>";
-								}
-								return sReturn;
-							}
-						}
-						*/
-					]
-				} );
-			}
+			// 				//var index = $(this).index();
+			// 				var sIndex = $(this).children('td:first-child').text();
+			// 				var index = parseInt(sIndex) - 1;
+			// 				showTooltipFromBackend(index);
+			// 			});
+			// 		},
+			// 		"aoColumns": [
+			// 			{ "sTitle": "Sl No" },
+			// 			{ "sTitle": "Time Stamp" },
+			// 			{ "sTitle": "Latitude" },
+			// 			{ "sTitle": "Longitude" },
+			// 			{ "sTitle": "Mobile No" },
+			// 			{ "sTitle": "Movement Source" }
+			// 			/*
+			// 			{
+			// 				"sTitle": "Movement Source",
+			// 				"sClass": "center",
+			// 				"fnRender": function(obj) {
+			// 					var sReturn = obj.aData[ obj.iDataColumn ];
+			// 					if ( sReturn == "A" ) {
+			// 						sReturn = "<b>A</b>";
+			// 					}
+			// 					return sReturn;
+			// 				}
+			// 			}
+			// 			*/
+			// 		]
+			// 	} );
+			// }
 			
-			/// Assign data here
-			$('#MovementGrid').dataTable().fnAddData(mGridData);
+			// /// Assign data here
+			// $('#MovementGrid').dataTable().fnAddData(mGridData);
 			
 			if (pushpins != ""){				
 				addMarker(pushpins, lines);
@@ -900,6 +1104,8 @@
 		}
 
 		function addMarkerInRouteMap(serialNo, latLng, notification) {
+
+			
 			marker = new google.maps.Marker
 			({
 				position: latLng,
@@ -1061,6 +1267,9 @@
 			var color;
 			var cdrPhoneNo;
 
+
+			
+
 			try {
 
 				clearMap();
@@ -1092,6 +1301,8 @@
 						azimuth = arr[3];
 						color = arr[4];
 						cdrPhoneNo = arr[5];
+
+						
 
 						var latLng = new google.maps.LatLng(lat, lng);
 						var toolTipText = '<div width="300px">' + txt + '</div>';

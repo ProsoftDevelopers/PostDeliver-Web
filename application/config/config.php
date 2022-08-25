@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $config['base_url'] = 'http://sebi.prosoftesolutions.com/';
 
 //for development Mode
-$config['base_url'] = 'http://localhost:8888/c5quats_lte_ci/';
+$config['base_url'] = 'http://localhost:8888/PostDeliver-Web/';
 
 
 /*

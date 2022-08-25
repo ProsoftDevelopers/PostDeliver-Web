@@ -94,21 +94,66 @@ class MonitorQuarantine extends CI_Model {
 	{
 		//$domain_id = $this->session->userdata('domain_id');
 		
-		$qry = "SELECT date_of_arrival AS p_time_stamp, latitude, longitude, mobile_no, 'BASE' AS movement_source1
-				FROM tbl_quarantine
-				WHERE mobile_no = '". $mobile_no ."' 
-				UNION
-				SELECT p_time_stamp, latitude, longitude, mobile_no, 'MOB' AS movement_source2
-				FROM tbl_history_image
-				WHERE mobile_no = '". $mobile_no ."'";
+		// $qry = "SELECT date_of_arrival AS p_time_stamp, latitude, longitude, mobile_no, 'BASE' AS movement_source1
+		// 		FROM tbl_quarantine
+		// 		WHERE mobile_no = '". $mobile_no ."' 
+		// 		UNION
+		// 		SELECT p_time_stamp, latitude, longitude, mobile_no, 'MOB' AS movement_source2
+		// 		FROM tbl_history_image
+		// 		WHERE mobile_no = '". $mobile_no ."'";
 
 		
+		$qry="SELECT distinct
+		e.entity_name,
+		e.address,
+		e.district_city,
+		e.state_ut_province,
+		e.pin,
+		p_time_stamp, h.latitude as h_latitude, h.longitude as h_longitude,
+		h.mobile_no
+		FROM entity e
+		INNER JOIN
+		[dbo].[tbl_history_image] h
+		on e.id = h.entity_id WHERE 1=1";
 
-		
+
+
+		//if user want to search by mobile No
+		if($mobile_no)
+		{
+			$qry.="AND h.mobile_no='".$mobile_no."'";
+		}
+
+
 
 		$query = $this->db->query($qry);
 
 		
+
+		if ($query->num_rows() > 0) 
+		{
+			return $query->result_array();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+
+	//get history images
+	function get_history_images($mobile_no){
+
+		$qry="SELECT url,filename from tbl_history_image where  1=1";
+
+
+		//if user want to search by mobile No
+		if($mobile_no !="")
+		{
+			$qry.="AND mobile_no='".$mobile_no."'";
+		}
+
+		$query = $this->db->query($qry);
 
 		if ($query->num_rows() > 0) 
 		{

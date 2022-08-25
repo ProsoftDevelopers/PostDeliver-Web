@@ -189,5 +189,27 @@ class MonitorQuarantinec extends CI_Controller {
 			// }
 		}
 	}
+
+	function get_history_images(){
+			
+		if($this->session->userdata('user_id')=="" || $this->session->userdata('user_id')==null)
+		{
+			$this->load->view('login');
+		}
+		else
+		{
+			$mobile_no = $this->input->post('mobile_no');
+			$this->load->model('MonitorQuarantine');
+			$data = $this->MonitorQuarantine->get_history_images($mobile_no);
+			
+			if($data != 0){
+				echo json_encode($data);
+			}
+			else {
+				echo json_encode(110);
+			}
+			
+		}
+	}
 } 
 ?>

@@ -9,7 +9,16 @@ $lang['all_rights_reserved'] = "All rights reserved.";
 $lang['prosoft'] = "Prosoft";
 $lang['app_name'] = "C5 Quats"; 
 $lang['c5'] = "C5"; 
-$lang['quats'] = "Quats"; 
+
+//old
+// $lang['quats'] = "Quats"; 
+// $lang['monitor_quarantine'] = "Monitor Quarantine";
+
+
+//new
+$lang['quats']="LNS";
+$lang['monitor_quarantine'] = "Monitor LNS";
+
 
 $lang['log_in'] = "Login"; 
 $lang['sign_in_to_start_your_session'] = "Sign in to start your session";
@@ -21,7 +30,7 @@ $lang['i_forgot_my_password'] = "I forgot my password";
 $lang['dashboard'] = "Dashboard"; 
 $lang['register_case'] = "Register Case"; 
 $lang['upload_data'] = "Upload Data";
-$lang['monitor_quarantine'] = "Monitor Quarantine";
+
 $lang['alert'] = "Alert";
 $lang['reports'] = "Reports";
 $lang['manage_user'] = "Manage User";
