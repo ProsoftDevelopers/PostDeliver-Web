@@ -329,6 +329,7 @@
 			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_movements_data",
 
 			 }).done(function( data ) {
+
 				processDBData(data);
 				
 				//get all history_images
@@ -348,6 +349,8 @@
 			   var lines = "";
 			   var qGridData = [];
 			   var json_obj = jQuery.parseJSON(data);
+
+			   
 				
 			  /* from result create a string of data and append to the div */
 			  if (json_obj.length > 0){
@@ -358,11 +361,13 @@
 					var district_city = json_obj[row].district_city;
 					var state_ut_province = json_obj[row].state_ut_province;
 					var pin = json_obj[row].pin;
-					var datetime_of_arrival = json_obj[row].p_time_stamp;
-					var latitude = json_obj[row].h_latitude;
-					var longitude = json_obj[row].h_longitude;
+					var p_time_stamp = json_obj[row].p_time_stamp;
+					var h_latitude = json_obj[row].h_latitude;
+					var h_longitude = json_obj[row].h_longitude;
 					var mobile_no = json_obj[row].mobile_no;
 
+
+					console.log(json_obj[row]);
 
 					// var date_of_arrival = json_obj[row].date_of_arrival; 
 					// var date_until_quarantined = json_obj[row].date_until_quarantined; 
@@ -412,17 +417,17 @@
 					// 					"<br><button type='button' onclick='getMovements("+ mobile_no +")'>Show History</button>";
 					
 
-					 qGridData.push([mobile_no,entity_name, address, district_city, state_ut_province, pin, datetime_of_arrival, latitude,longitude]);
+					 qGridData.push([entity_name, address, district_city, state_ut_province, pin, p_time_stamp, h_latitude,h_longitude,mobile_no]);
 
-					var notification = "<B>Mobile No = </B>" + mobile_no +	
-										"<br><B>Entity Name = </B>" + entity_name +											
-										"<br><B>Address = </B>" + address +
-										"<br><B>District City = </B>" + district_city +
-										"<br><B>State_ut_province = </B>" + state_ut_province +
-										"<br><B>Pin = </B>" + pin +
-										"<br><B>DateTime of Arrival = </B>" + datetime_of_arrival +
-										"<br><B>Latitude = </B>" + latitude +
-										"<br><B>Longitude = </B>" + longitude ;
+					var notification = "<B>entity_name = </B>" + entity_name +	
+										"<br><B>address = </B>" + address +											
+										"<br><B>district_city = </B>" + district_city +
+										"<br><B>state_ut_province = </B>" + state_ut_province +
+										"<br><B>pin = </B>" + pin +
+										"<br><B>p_time_stamp = </B>" + p_time_stamp +
+										"<br><B>h_latitude = </B>" + h_latitude +
+										"<br><B> h_longitude = </B>" +  h_longitude +
+										"<br><B>mobile_no = </B>" + mobile_no ;
 								
 					
 				
@@ -432,7 +437,7 @@
 						pushpins += "$$$$";
 					}
 					
-					pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
+					pushpins += h_latitude + "$$$" + h_longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
 
 				}
 			  }
@@ -442,12 +447,13 @@
 					"sScrollX": "100%",
 					"sScrollXInner": "110%",
 					"aaData": qGridData,
+					"order":[[5,"desc"]],
 					"initComplete": function () {
 						$("#LocationGrid").on("click", "tr[role='row']", function(){
 							$("#LocationGrid tbody tr").removeClass('row_selected');        
 							$(this).addClass('row_selected');
 							
-							var sMobileNo = $(this).children('td:first-child').text();							
+							var sMobileNo = $(this).children('td:last-child').text();							
 							 getMovements(sMobileNo);
 						});
 					},
@@ -475,15 +481,15 @@
 					// ]
 
 					"aoColumns": [
-						{ "sTitle": "Mobile No" },
-						{ "sTitle": "Entity Name" },
-						{ "sTitle": "Address" },
-						{ "sTitle": "District City" },
-						{ "sTitle": "State_ut_province" },
-						{ "sTitle": "Pin" },
-						{ "sTitle": "DateTime of Arrival" },
-						{ "sTitle": "Latitude" },
-						{ "sTitle": "Longitude" }
+						{ "sTitle": "entity_name" },
+						{ "sTitle": "address" },
+						{ "sTitle": "district_city" },
+						{ "sTitle": "state_ut_province" },
+						{ "sTitle": "pin" },
+						{ "sTitle": "p_time_stamp" },
+						{ "sTitle": "h_latitude" },
+						{ "sTitle": "h_longitude" },
+						{ "sTitle": "mobile_no" }
 						
 						/*
 						{
@@ -582,24 +588,24 @@
 					var district_city = json_obj[row].district_city;
 					var state_ut_province = json_obj[row].state_ut_province;
 					var pin = json_obj[row].pin;
-					var datetime_of_arrival = json_obj[row].p_time_stamp;
-					var latitude = json_obj[row].h_latitude;
-					var longitude = json_obj[row].h_longitude;
+					var p_time_stamp = json_obj[row].p_time_stamp;
+					var h_latitude = json_obj[row].h_latitude;
+					var h_longitude = json_obj[row].h_longitude;
 					var mobile_no = json_obj[row].mobile_no;
 
 
-					mGridData.push([mobile_no,entity_name, address, district_city, state_ut_province, pin, datetime_of_arrival, latitude,longitude]);
+					mGridData.push([entity_name, address, district_city, state_ut_province, pin, p_time_stamp, h_latitude,h_longitude,mobile_no]);
 
 
-					var notification = "<B>Mobile No = </B>" + mobile_no +	
-										"<br><B>Entity Name = </B>" + entity_name +											
-										"<br><B>Address = </B>" + address +
-										"<br><B>District City = </B>" + district_city +
-										"<br><B>State_ut_province = </B>" + state_ut_province +
-										"<br><B>Pin = </B>" + pin +
-										"<br><B>DateTime of Arrival = </B>" + datetime_of_arrival +
-										"<br><B>Latitude = </B>" + latitude +
-										"<br><B>Longitude = </B>" + longitude ;
+					var notification = "<B>entity_name = </B>" + entity_name +	
+										"<br><B>address = </B>" + address +											
+										"<br><B>district_city = </B>" + district_city +
+										"<br><B>state_ut_province = </B>" + state_ut_province +
+										"<br><B>pin = </B>" + pin +
+										"<br><B>p_time_stamp = </B>" + p_time_stamp +
+										"<br><B>h_latitude = </B>" + h_latitude +
+										"<br><B> h_longitude = </B>" +  h_longitude +
+										"<br><B>mobile_no = </B>" + mobile_no ;
 
 
 					if (pushpins != "")
@@ -607,7 +613,7 @@
 						pushpins += "$$$$";
 					}
 					
-					pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
+					pushpins += h_latitude + "$$$" + h_longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
 					
 					// var p_time_stamp = json_obj[row]['p_time_stamp']; 
 					// var latitude = json_obj[row].latitude; 

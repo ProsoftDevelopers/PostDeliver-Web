@@ -126,6 +126,9 @@ class MonitorQuarantine extends CI_Model {
 
 
 
+		$qry.="ORDER BY h.p_time_stamp DESC";
+
+		
 		$query = $this->db->query($qry);
 
 		
