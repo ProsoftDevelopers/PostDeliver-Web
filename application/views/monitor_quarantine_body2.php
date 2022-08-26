@@ -77,6 +77,11 @@
 		height: 100px;
 		cursor: pointer;
   		}
+
+		#LocationGrid_wrapper .row:last-child {
+			display: flex;
+			flex-direction:column;
+		}
 		
     </style>
 	
@@ -138,7 +143,7 @@
 				  </div>
 				</div>
 			  </section>	
-			  <section class="col-lg-6 connectedSortable mb-4">
+			  <section class="col-lg-6 connectedSortable mb-4 location-grid">
 				<div class="card h-100">
 				  <div class="card-header">
 					<h3 class="card-title">
@@ -354,6 +359,7 @@
 				
 			  /* from result create a string of data and append to the div */
 			  if (json_obj.length > 0){
+
 				for(var row = 0; row < json_obj.length; row++){			
 					
 					var entity_name = json_obj[row].entity_name;
@@ -361,13 +367,13 @@
 					var district_city = json_obj[row].district_city;
 					var state_ut_province = json_obj[row].state_ut_province;
 					var pin = json_obj[row].pin;
-					var p_time_stamp = json_obj[row].p_time_stamp;
+					var notice_serverd_on = json_obj[row].notice_serverd_on;
 					var h_latitude = json_obj[row].h_latitude;
 					var h_longitude = json_obj[row].h_longitude;
 					var mobile_no = json_obj[row].mobile_no;
 
 
-					console.log(json_obj[row]);
+					
 
 					// var date_of_arrival = json_obj[row].date_of_arrival; 
 					// var date_until_quarantined = json_obj[row].date_until_quarantined; 
@@ -417,14 +423,14 @@
 					// 					"<br><button type='button' onclick='getMovements("+ mobile_no +")'>Show History</button>";
 					
 
-					 qGridData.push([entity_name, address, district_city, state_ut_province, pin, p_time_stamp, h_latitude,h_longitude,mobile_no]);
+					 qGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude,h_longitude,mobile_no]);
 
 					var notification = "<B>entity_name = </B>" + entity_name +	
 										"<br><B>address = </B>" + address +											
 										"<br><B>district_city = </B>" + district_city +
 										"<br><B>state_ut_province = </B>" + state_ut_province +
 										"<br><B>pin = </B>" + pin +
-										"<br><B>p_time_stamp = </B>" + p_time_stamp +
+										"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
 										"<br><B>h_latitude = </B>" + h_latitude +
 										"<br><B> h_longitude = </B>" +  h_longitude +
 										"<br><B>mobile_no = </B>" + mobile_no ;
@@ -486,7 +492,7 @@
 						{ "sTitle": "district_city" },
 						{ "sTitle": "state_ut_province" },
 						{ "sTitle": "pin" },
-						{ "sTitle": "p_time_stamp" },
+						{ "sTitle": "notice_serverd_on" },
 						{ "sTitle": "h_latitude" },
 						{ "sTitle": "h_longitude" },
 						{ "sTitle": "mobile_no" }
@@ -588,13 +594,13 @@
 					var district_city = json_obj[row].district_city;
 					var state_ut_province = json_obj[row].state_ut_province;
 					var pin = json_obj[row].pin;
-					var p_time_stamp = json_obj[row].p_time_stamp;
+					var notice_serverd_on = json_obj[row].notice_serverd_on;
 					var h_latitude = json_obj[row].h_latitude;
 					var h_longitude = json_obj[row].h_longitude;
 					var mobile_no = json_obj[row].mobile_no;
 
 
-					mGridData.push([entity_name, address, district_city, state_ut_province, pin, p_time_stamp, h_latitude,h_longitude,mobile_no]);
+					mGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude,h_longitude,mobile_no]);
 
 
 					var notification = "<B>entity_name = </B>" + entity_name +	
@@ -602,7 +608,7 @@
 										"<br><B>district_city = </B>" + district_city +
 										"<br><B>state_ut_province = </B>" + state_ut_province +
 										"<br><B>pin = </B>" + pin +
-										"<br><B>p_time_stamp = </B>" + p_time_stamp +
+										"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
 										"<br><B>h_latitude = </B>" + h_latitude +
 										"<br><B> h_longitude = </B>" +  h_longitude +
 										"<br><B>mobile_no = </B>" + mobile_no ;

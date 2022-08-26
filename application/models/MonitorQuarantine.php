@@ -109,7 +109,7 @@ class MonitorQuarantine extends CI_Model {
 		e.district_city,
 		e.state_ut_province,
 		e.pin,
-		p_time_stamp, h.latitude as h_latitude, h.longitude as h_longitude,
+		p_time_stamp, DATEADD(MINUTE, 751,p_time_stamp) as notice_serverd_on, h.latitude as h_latitude, h.longitude as h_longitude,
 		h.mobile_no
 		FROM entity e
 		INNER JOIN
