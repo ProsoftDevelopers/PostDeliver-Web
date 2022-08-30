@@ -1,233 +1,254 @@
-	
 	<style>
 		#map-canvas {
 			min-height: 400px;
 			height: 100%;
 		}
-		
+
 		#legend {
-				background: gold;
-				padding: 5px;
-				width: 110px;
-				height:auto;
-				min-height:0px;
-				max-height: 250px;
-				overflow:auto;
+			background: gold;
+			padding: 5px;
+			width: 110px;
+			height: auto;
+			min-height: 0px;
+			max-height: 250px;
+			overflow: auto;
 		}
+
 		#legend img {
 			vertical-align: middle;
 		}
-		
+
 		.material-icons,
 		.icon-text {
 			vertical-align: middle;
 		}
-		
+
 		.material-icons {
 			padding-bottom: 3px;
 		}
-		
+
 		#main {
 			transition: margin-left .5s;
 			padding: 16px;
 			margin-left: 100px;
 		}
+
 		/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-		
+
 		@media screen and (max-height: 450px) {
 			.sidebar {
 				padding-top: 15px;
 			}
+
 			.sidebar a {
 				font-size: 18px;
 			}
-		}			
-		
-		.loader {			  
-		  border: 16px solid #f3f3f3;
-		  border-radius: 50%;
-		  border-top: 16px solid #3498db;
-		  width: 120px;
-		  height: 120px;
-		  -webkit-animation: spin 2s linear infinite; /* Safari */
-		  animation: spin 2s linear infinite;
+		}
+
+		.loader {
+			border: 16px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 16px solid #3498db;
+			width: 120px;
+			height: 120px;
+			-webkit-animation: spin 2s linear infinite;
+			/* Safari */
+			animation: spin 2s linear infinite;
 		}
 
 		/* Safari */
 		@-webkit-keyframes spin {
-		  0% { -webkit-transform: rotate(0deg); }
-		  100% { -webkit-transform: rotate(360deg); }
+			0% {
+				-webkit-transform: rotate(0deg);
+			}
+
+			100% {
+				-webkit-transform: rotate(360deg);
+			}
 		}
 
 		@keyframes spin {
-		  0% { transform: rotate(0deg); }
-		  100% { transform: rotate(360deg); }
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
 		}
-		
-		tr.row_selected td{background-color:#0072BC !important;}
-		
+
+		tr.row_selected td {
+			background-color: #0072BC !important;
+		}
+
 		/* th { font-size: 12px; }
 		td { font-size: 12px; } */
 
-		th { font-size: 12px; white-space: nowrap;}
-		td { font-size: 12px; white-space: nowrap; }
+		th {
+			font-size: 12px;
+			white-space: nowrap;
+		}
+
+		td {
+			font-size: 12px;
+			white-space: nowrap;
+		}
 
 		.img-responsive {
-		width: auto;
-		height: 100px;
-		cursor: pointer;
-  		}
+			width: auto;
+			height: 100px;
+			cursor: pointer;
+		}
 
 		#LocationGrid_wrapper .row:last-child {
 			display: flex;
-			flex-direction:column;
+			flex-direction: column;
 		}
-		
-    </style>
-	
-	<!--<script type="text/javascript" src="http://maps.google.com.mx/maps/api/js?v=3"></script>--> <!-- ?&key=AIzaSyDTcUAabUdy75i8OpRkMhnBH5v0pn_swMs -->    
+	</style>
+
+	<!--<script type="text/javascript" src="http://maps.google.com.mx/maps/api/js?v=3"></script>-->
+	<!-- ?&key=AIzaSyDTcUAabUdy75i8OpRkMhnBH5v0pn_swMs -->
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=drawing"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcUAabUdy75i8OpRkMhnBH5v0pn_swMs&libraries=places" async defer></script> 
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcUAabUdy75i8OpRkMhnBH5v0pn_swMs&libraries=places" async defer></script>
 	<!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
 	<script src="<?php echo base_url(); ?>dist/js/myJS/oms.min.js"></script>
-	
+
 	<!-- Content Wrapper. Contains page content -->
-	  <div class="content-wrapper">
+	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
-		  <div class="container-fluid">
-			<div class="row mb-2">
-			  <div class="col-sm-6">
-				<h1 class="m-0 text-dark"><?php echo $this->lang->line('monitor_quarantine') ?></h1>
-			  </div><!-- /.col -->
-			  <div class="col-sm-6">
-				<ol class="breadcrumb float-sm-right">
-				  <li class="breadcrumb-item"><a href="#"><?php echo $this->lang->line('home') ?></a></li>
-				  <li class="breadcrumb-item active"><?php echo $this->lang->line('monitor_quarantine') ?></li>
-				</ol>
-			  </div><!-- /.col -->
-			</div><!-- /.row -->
-		  </div><!-- /.container-fluid -->
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark"><?php echo $this->lang->line('monitor_quarantine') ?></h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#"><?php echo $this->lang->line('home') ?></a></li>
+							<li class="breadcrumb-item active"><?php echo $this->lang->line('monitor_quarantine') ?></li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
 		</div>
 		<!-- /.content-header -->
 
 		<!-- Main content -->
 		<section class="content">
-		  <div class="container-fluid">
-			<!-- Main row -->
-			<div class="row ">
-			  <!-- Left col -->
-			  <section class="col-lg-6 connectedSortable mb-4 ">
-				<div class="card h-100 ">
-				  <div class="card-header">
-					<h3 class="card-title">
-					  <i class="ion-map mr-1"></i>
-					  <?php echo $this->lang->line('map') ?>
-					</h3>
-					<div class="card-tools">
-					  <button type="button" class="btn btn-tool" data-card-widget="maximize">
-						<i class="fas fa-expand"></i>
-					  </button>  
-					  <!--
+			<div class="container-fluid">
+				<!-- Main row -->
+				<div class="row ">
+					<!-- Left col -->
+					<section class="col-lg-6 connectedSortable mb-4 ">
+						<div class="card h-100 ">
+							<div class="card-header">
+								<h3 class="card-title">
+									<i class="ion-map mr-1"></i>
+									<?php echo $this->lang->line('map') ?>
+								</h3>
+								<div class="card-tools">
+									<button type="button" class="btn btn-tool" data-card-widget="maximize">
+										<i class="fas fa-expand"></i>
+									</button>
+									<!--
 					  <button type="button" class="btn btn-tool" data-card-widget="remove">
 						<i class="fas fa-times"></i>
 					  </button>
 					  -->
-					</div>
-				  </div><!-- /.card-header -->
-				  <div class="card-body">
-					<input id="pac-input" class="controls" type="text" placeholder="<?php echo $this->lang->line('search_google_maps') ?>">
-					<div id="map-canvas"></div>	
-					<div id="legend"></div>
-				  </div>
-				</div>
-			  </section>	
-			  <section class="col-lg-6 connectedSortable mb-4 location-grid">
-				<div class="card h-100">
-				  <div class="card-header">
-					<h3 class="card-title">
-					  <i class="fas fa-map-marker-alt mr-1"></i>
-					  <?php echo $this->lang->line('locations') ?>
-					</h3>
-					<div class="card-tools">
-					  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-						<i class="fas fa-minus"></i>
-					  </button>
-					  <!--
+								</div>
+							</div><!-- /.card-header -->
+							<div class="card-body">
+								<input id="pac-input" class="controls" type="text" placeholder="<?php echo $this->lang->line('search_google_maps') ?>">
+								<div id="map-canvas"></div>
+								<div id="legend"></div>
+							</div>
+						</div>
+					</section>
+					<section class="col-lg-6 connectedSortable mb-4 location-grid">
+						<div class="card h-100">
+							<div class="card-header">
+								<h3 class="card-title">
+									<i class="fas fa-map-marker-alt mr-1"></i>
+									<?php echo $this->lang->line('locations') ?>
+								</h3>
+								<div class="card-tools">
+									<button type="button" class="btn btn-tool" data-card-widget="collapse">
+										<i class="fas fa-minus"></i>
+									</button>
+									<!--
 					  <button type="button" class="btn btn-tool" data-card-widget="remove">
 						<i class="fas fa-times"></i>
 					  </button>
 					  -->
-					</div>
-				  </div><!-- /.card-header -->
-				  <div class="card-body">
-					<table id="LocationGrid" class="table table-bordered table-hover" style="cursor:pointer">
-					</table>
-				  </div>
-				</div>
-				<div class="card d-none">
-				  <div class="card-header">
-					<h3 class="card-title">
-					  <i class="ion-shuffle mr-1"></i>
-					  <?php echo $this->lang->line('movements') ?>
-					</h3>
-					<div class="card-tools">
-					  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-						<i class="fas fa-minus"></i>
-					  </button>                 
-					  <!--
+								</div>
+							</div><!-- /.card-header -->
+							<div class="card-body">
+								<table id="LocationGrid" class="table table-bordered table-hover" style="cursor:pointer">
+								</table>
+							</div>
+						</div>
+						<div class="card d-none">
+							<div class="card-header">
+								<h3 class="card-title">
+									<i class="ion-shuffle mr-1"></i>
+									<?php echo $this->lang->line('movements') ?>
+								</h3>
+								<div class="card-tools">
+									<button type="button" class="btn btn-tool" data-card-widget="collapse">
+										<i class="fas fa-minus"></i>
+									</button>
+									<!--
 					  <button type="button" class="btn btn-tool" data-card-widget="remove">
 						<i class="fas fa-times"></i>
 					  </button>
 					  -->
+								</div>
+							</div><!-- /.card-header -->
+							<div class="card-body">
+								<table id="MovementGrid" class="table table-bordered table-hover" style="cursor:pointer">
+								</table>
+							</div>
+						</div>
+					</section>
+
+					<!-- display images in grid -->
+					<section class="col-sm-12 connectedSortable">
+						<div class="card" id="history_images">
+							<div class="card-header">
+								Images
+							</div>
+							<div class="card-body">
+
+							</div>
+						</div>
+					</section>
+
+
+					<!-- display images in fullscreen mode -->
+					<div class="modal fade" data-backdrop="static" data-keyboard="false" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="image-Modal-title">Full screen</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body" id="image-modal-body">
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div><!-- /.card-header -->
-				  <div class="card-body">
-					<table id="MovementGrid" class="table table-bordered table-hover" style="cursor:pointer">
-					</table>
-				  </div>
 				</div>
-			  </section>
-
-			  <!-- display images in grid -->
-			  <section class="col-sm-12 connectedSortable">
-				<div class="card" id="history_images">
-					<div class="card-header">
-						Images
-					</div>
-					<div class="card-body">
-
-					</div>
-				</div>
-			  </section>
-
-
-			   <!-- display images in fullscreen mode -->
-			   <div class="modal fade"  data-backdrop="static" data-keyboard="false" id="imageModal" tabindex="-1" role="dialog"
-                aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg"   role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="image-Modal-title">Full screen</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body" id="image-modal-body">
-                        </div>
-                    </div>
-                </div>
-            </div>
-			</div>
-			<!-- /.row (main row) -->
-		  </div><!-- /.container-fluid -->
+				<!-- /.row (main row) -->
+			</div><!-- /.container-fluid -->
 		</section>
 		<!-- /.content -->
-	  </div>
-	  <!-- /.content-wrapper -->
-	  
-	<script type="text/javascript">			
+	</div>
+	<!-- /.content-wrapper -->
+
+	<script type="text/javascript">
 		var map;
 		var markers = [];
 		var locationSearchMarkers = [];
@@ -237,7 +258,7 @@
 		var movementLines = [];
 		var legend;
 
-		var mapLatLng; 
+		var mapLatLng;
 		var mapZoom = 11;
 
 		var oms;
@@ -248,15 +269,18 @@
 		var directionsDisplay;
 		var directionsService = new google.maps.DirectionsService();
 		var arrDirectionsDisplayWithoutWaypoints = [];
-		
+
 		var dfp;
 		var dfwa = null;
 		var dfwb;
 		var dfwc;
 		var dfwd;
-		
+
+
+
+
 		google.maps.event.addDomListener(window, 'load', initialize);
-		
+
 		////////////////////////////////////
 		// START DB OPERATIONS
 
@@ -264,104 +288,104 @@
 
 
 		//show images in full screen mode
-		function showFullScreen (props){
-			
+		function showFullScreen(props) {
+
 			var response = "";
 
-			if(props) {
+			if (props) {
 
-				response += "<img class='img-fluid w-100' alt='"+$(props).attr("alt")+"' src='"+$(props).attr("src")+"' />"
+				response += "<img class='img-fluid w-100' alt='" + $(props).attr("alt") + "' src='" + $(props).attr("src") + "' />"
 			}
-			
+
 			$('#image-modal-body').html(response);
 			$('#imageModal').modal('show');
 		}
 
 
 		//get history images based on mobileNo
-		function get_history_images(mobile_no){
-			
-			$.ajax({ 
-			   method: "POST", 			   
-			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_history_images",
-			   data: { "mobile_no": mobile_no ? mobile_no :"" }
-			 }).done(function( data ) {
+		function get_history_images(mobile_no) {
+
+			$.ajax({
+				method: "POST",
+				url: "<?php echo base_url(); ?>index.php/MonitorQuarantinec/get_history_images",
+				data: {
+					"mobile_no": mobile_no ? mobile_no : ""
+				}
+			}).done(function(data) {
 
 
-				
-				if(data != "110") {
 
-					var response= "<div class='row'>";
+				if (data != "110") {
+
+					var response = "<div class='row'>";
 					var json_obj = jQuery.parseJSON(data);
 
 					for (let index = 0; index < json_obj.length; index++) {
 
-						response += "<div class='col-sm-2'><div class='card'><img onclick='showFullScreen(this)'  class='img-responsive' src='"+json_obj[index].url+"' alt='"+json_obj[index].filename+"' /></div></div>"
-			
+						response += "<div class='col-sm-2'><div class='card'><img onclick='showFullScreen(this)'  class='img-responsive' src='" + json_obj[index].url + "' alt='" + json_obj[index].filename + "' /></div></div>"
+
 					}
 
-				
-					response+="<div>";
+
+					response += "<div>";
 
 
 					$("#history_images .card-body").html(response);
-				}
-				else
-				 {
+				} else {
 					$("#history_images .card-body").html("testing");
-				 }
-			 });
+				}
+			});
 
 
 		}
-		
-		function getQuarantineData(){
+
+		function getQuarantineData() {
 
 			// $.ajax({ 
 			//    method: "POST", 			   
-			//    url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_quarantine_data",
+			//    url: "<?php echo base_url(); ?>index.php/MonitorQuarantinec/get_quarantine_data",
 			//  }).done(function( data ) {
 			// 	processDBData(data);
-				
+
 			// 	//document.getElementById("person_details_loader").style.display = "none";
 			// 	//document.getElementById("person_details").style.display = "block";
 			// 	//document.getElementById("person_details").style.cursor = "pointer";
 			//  });
 
 
-			$.ajax({ 
-			   method: "POST", 			   
-			   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_movements_data",
+			$.ajax({
+				method: "POST",
+				url: "<?php echo base_url(); ?>index.php/MonitorQuarantinec/get_movements_data",
 
-			 }).done(function( data ) {
+			}).done(function(data) {
 
 				processDBData(data);
-				
+
 				//get all history_images
 				// get_history_images("");
-				
+
 				//document.getElementById("person_details_loader").style.display = "none";
 				//document.getElementById("person_details").style.display = "block";
 				//document.getElementById("person_details").style.cursor = "pointer";
-			 });
+			});
 
 
 		}
-	   
-	   function processDBData(data){
-			   var result= data; // $.parseJSON(data); 
-			   var pushpins="";
-			   var lines = "";
-			   var qGridData = [];
-			   var json_obj = jQuery.parseJSON(data);
 
-			   
-				
-			  /* from result create a string of data and append to the div */
-			  if (json_obj.length > 0){
+		function processDBData(data) {
+			var result = data; // $.parseJSON(data); 
+			var pushpins = "";
+			var lines = "";
+			var qGridData = [];
+			var json_obj = jQuery.parseJSON(data);
 
-				for(var row = 0; row < json_obj.length; row++){			
-					
+
+
+			/* from result create a string of data and append to the div */
+			if (json_obj.length > 0) {
+
+				for (var row = 0; row < json_obj.length; row++) {
+
 					var entity_name = json_obj[row].entity_name;
 					var address = json_obj[row].address;
 					var district_city = json_obj[row].district_city;
@@ -373,7 +397,7 @@
 					var mobile_no = json_obj[row].mobile_no;
 
 
-					
+
 
 					// var date_of_arrival = json_obj[row].date_of_arrival; 
 					// var date_until_quarantined = json_obj[row].date_until_quarantined; 
@@ -396,9 +420,9 @@
 					// var last_latitude = json_obj[row].last_latitude; 
 					// var last_longitude = json_obj[row].last_longitude; 
 					// var gender = json_obj[row].gender;
-					
+
 					// qGridData.push([mobile_no, traveller_patient_name, date_of_arrival, date_until_quarantined, latitude, longitude, gender]);
-					
+
 					// var notification = "<B>Date Of Arrival = </B>" + date_of_arrival +										
 					// 					"<br><B>Date Until Quarantined = </B>" + date_until_quarantined +
 					// 					"<br><B>Country Of Origin Of Journey = </B>" + country_of_origin_of_journey +
@@ -421,125 +445,147 @@
 					// 					"<br><B>Last Longitude = </B>" + last_longitude +
 					// 					"<br><B>Gender = </B>" + gender +
 					// 					"<br><button type='button' onclick='getMovements("+ mobile_no +")'>Show History</button>";
-					
 
-					 qGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude,h_longitude,mobile_no]);
 
-					var notification = "<B>entity_name = </B>" + entity_name +	
-										"<br><B>address = </B>" + address +											
-										"<br><B>district_city = </B>" + district_city +
-										"<br><B>state_ut_province = </B>" + state_ut_province +
-										"<br><B>pin = </B>" + pin +
-										"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
-										"<br><B>h_latitude = </B>" + h_latitude +
-										"<br><B> h_longitude = </B>" +  h_longitude +
-										"<br><B>mobile_no = </B>" + mobile_no ;
-								
-					
-				
+					qGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude, h_longitude, mobile_no]);
 
-					if (pushpins != "")
-					{
+					var notification = "<B>entity_name = </B>" + entity_name +
+						"<br><B>address = </B>" + address +
+						"<br><B>district_city = </B>" + district_city +
+						"<br><B>state_ut_province = </B>" + state_ut_province +
+						"<br><B>pin = </B>" + pin +
+						"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
+						"<br><B>h_latitude = </B>" + h_latitude +
+						"<br><B> h_longitude = </B>" + h_longitude +
+						"<br><B>mobile_no = </B>" + mobile_no;
+
+
+
+
+					if (pushpins != "") {
 						pushpins += "$$$$";
 					}
-					
+
 					pushpins += h_latitude + "$$$" + h_longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
 
 				}
-			  }
-			  
-			  $('#LocationGrid').dataTable( {
-					"aLengthMenu": [[5, 10], [5, 10]],
-					"sScrollX": "100%",
-					"sScrollXInner": "110%",
-					"aaData": qGridData,
-					"order":[[5,"desc"]],
-					"initComplete": function () {
-						$("#LocationGrid").on("click", "tr[role='row']", function(){
-							$("#LocationGrid tbody tr").removeClass('row_selected');        
-							$(this).addClass('row_selected');
-							
-							var sMobileNo = $(this).children('td:last-child').text();							
-							 getMovements(sMobileNo);
-						});
-					},
-					// "aoColumns": [
-					// 	{ "sTitle": "Mobile No" },
-					// 	{ "sTitle": "Patient Name" },
-					// 	{ "sTitle": "Date Of Arrival" },
-					// 	{ "sTitle": "Date Until Quarantined" },
-					// 	{ "sTitle": "Latitude" },
-					// 	{ "sTitle": "Longitude" },
-					// 	{ "sTitle": "Gender" }
-					// 	/*
-					// 	{
-					// 		"sTitle": "Gender",
-					// 		"sClass": "center",
-					// 		"fnRender": function(obj) {
-					// 			var sReturn = obj.aData[ obj.iDataColumn ];
-					// 			if ( sReturn == "A" ) {
-					// 				sReturn = "<b>A</b>";
-					// 			}
-					// 			return sReturn;
-					// 		}
-					// 	}
-					// 	*/
-					// ]
+			}
 
-					"aoColumns": [
-						{ "sTitle": "entity_name" },
-						{ "sTitle": "address" },
-						{ "sTitle": "district_city" },
-						{ "sTitle": "state_ut_province" },
-						{ "sTitle": "pin" },
-						{ "sTitle": "notice_serverd_on" },
-						{ "sTitle": "h_latitude" },
-						{ "sTitle": "h_longitude" },
-						{ "sTitle": "mobile_no" }
-						
-						/*
-						{
-							"sTitle": "Gender",
-							"sClass": "center",
-							"fnRender": function(obj) {
-								var sReturn = obj.aData[ obj.iDataColumn ];
-								if ( sReturn == "A" ) {
-									sReturn = "<b>A</b>";
-								}
-								return sReturn;
+			$('#LocationGrid').dataTable({
+				"aLengthMenu": [
+					[5, 10],
+					[5, 10]
+				],
+				"sScrollX": "100%",
+				"sScrollXInner": "110%",
+				"aaData": qGridData,
+				"order": [
+					[5, "desc"]
+				],
+				"initComplete": function() {
+					$("#LocationGrid").on("click", "tr[role='row']", function() {
+						$("#LocationGrid tbody tr").removeClass('row_selected');
+						$(this).addClass('row_selected');
+
+						var sMobileNo = $(this).children('td:last-child').text();
+						getMovements(sMobileNo);
+
+					});
+				},
+				// "aoColumns": [
+				// 	{ "sTitle": "Mobile No" },
+				// 	{ "sTitle": "Patient Name" },
+				// 	{ "sTitle": "Date Of Arrival" },
+				// 	{ "sTitle": "Date Until Quarantined" },
+				// 	{ "sTitle": "Latitude" },
+				// 	{ "sTitle": "Longitude" },
+				// 	{ "sTitle": "Gender" }
+				// 	/*
+				// 	{
+				// 		"sTitle": "Gender",
+				// 		"sClass": "center",
+				// 		"fnRender": function(obj) {
+				// 			var sReturn = obj.aData[ obj.iDataColumn ];
+				// 			if ( sReturn == "A" ) {
+				// 				sReturn = "<b>A</b>";
+				// 			}
+				// 			return sReturn;
+				// 		}
+				// 	}
+				// 	*/
+				// ]
+
+				"aoColumns": [{
+						"sTitle": "entity_name"
+					},
+					{
+						"sTitle": "address"
+					},
+					{
+						"sTitle": "district_city"
+					},
+					{
+						"sTitle": "state_ut_province"
+					},
+					{
+						"sTitle": "pin"
+					},
+					{
+						"sTitle": "notice_serverd_on"
+					},
+					{
+						"sTitle": "h_latitude"
+					},
+					{
+						"sTitle": "h_longitude"
+					},
+					{
+						"sTitle": "mobile_no"
+					}
+
+					/*
+					{
+						"sTitle": "Gender",
+						"sClass": "center",
+						"fnRender": function(obj) {
+							var sReturn = obj.aData[ obj.iDataColumn ];
+							if ( sReturn == "A" ) {
+								sReturn = "<b>A</b>";
 							}
+							return sReturn;
 						}
-						*/
-					]
-				} );
-				 
-			 if (pushpins != "")
+					}
+					*/
+				]
+			});
+
+			if (pushpins != "")
 				addMarker(pushpins, lines);
-			 else
+			else
 				alert("No records found.");
-		   }		   
-	   
-	   function getMovements(ctl) {	
-		  //alert(ctl.rowIndex);
-		  //_row = $(ctl).parents("tr");	
-		  //var cell = ctl.cells[15].innerHTML;
-		  //var cols = ctl.children("td");
-		  
-		  clearMap();
-		  
-		  var mobile_no;
-		  var type = typeof ctl;
-		  
-		  mobile_no = ctl;
-		  
-		  /*
+		}
+
+		function getMovements(ctl) {
+			//alert(ctl.rowIndex);
+			//_row = $(ctl).parents("tr");	
+			//var cell = ctl.cells[15].innerHTML;
+			//var cols = ctl.children("td");
+
+			clearMap();
+
+			var mobile_no;
+			var type = typeof ctl;
+
+			mobile_no = ctl;
+
+			/*
 		  if (type === "number")
 			mobile_no = ctl;
 		  else
 			mobile_no = ctl.cells[15].innerHTML; // $(cols[16]).text();
 		  */
-		  
-		  /*
+
+			/*
 		  if (dfwa == null){
 			dfwa = dfp.createDFPanel("History","mydfa");
 			dfwa.addContentDiv(document.getElementById("dockfloatdiva"));      
@@ -550,44 +596,49 @@
 		  document.getElementById("movement_details").style.display = "none";
 		  */
 
-		 
-		
-		  
-		  $.ajax({ 
-		   method: "POST", 			   
-		   url: "<?php echo base_url();?>index.php/MonitorQuarantinec/get_movements_data",
-		   data: { "mobile_no": mobile_no }
-		 }).done(function( data ) {
 
-			if (data == 110) {
-				alert("No records found.");
-			}else{
-				showMovements(data);
 
-				//get history images based on mobile No
-				get_history_images(mobile_no);
-				//document.getElementById("movement_details_loader").style.display = "none";
-				//document.getElementById("movement_details").style.display = "block";
-			}
-		 });
+
+			$.ajax({
+				method: "POST",
+				url: "<?php echo base_url(); ?>index.php/MonitorQuarantinec/get_movements_data",
+				data: {
+					"mobile_no": mobile_no
+				}
+			}).done(function(data) {
+
+				if (data == 110) {
+					alert("No records found.");
+				} else {
+					showMovements(data);
+
+					//get history images based on mobile No
+					get_history_images(mobile_no);
+
+
+
+					//document.getElementById("movement_details_loader").style.display = "none";
+					//document.getElementById("movement_details").style.display = "block";
+				}
+			});
 		}
-		
+
 		var oTable;
 		var giRedraw = false;
-		
-		function showMovements(data){
-		   var result= data; // $.parseJSON(data); 
-		   var pushpins="";
-		   var lines = "";
-		   
-		   var mGridData = [];
-		   var json_obj = jQuery.parseJSON(data);
 
-		  
-		   
-		  /* from result create a string of data and append to the div */
-			if (json_obj.length > 0){
-				for(var row = 0; row < json_obj.length; row++){		
+		function showMovements(data) {
+			var result = data; // $.parseJSON(data); 
+			var pushpins = "";
+			var lines = "";
+
+			var mGridData = [];
+			var json_obj = jQuery.parseJSON(data);
+
+
+
+			/* from result create a string of data and append to the div */
+			if (json_obj.length > 0) {
+				for (var row = 0; row < json_obj.length; row++) {
 
 					var entity_name = json_obj[row].entity_name;
 					var address = json_obj[row].address;
@@ -600,71 +651,70 @@
 					var mobile_no = json_obj[row].mobile_no;
 
 
-					mGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude,h_longitude,mobile_no]);
+					mGridData.push([entity_name, address, district_city, state_ut_province, pin, notice_serverd_on, h_latitude, h_longitude, mobile_no]);
 
 
-					var notification = "<B>entity_name = </B>" + entity_name +	
-										"<br><B>address = </B>" + address +											
-										"<br><B>district_city = </B>" + district_city +
-										"<br><B>state_ut_province = </B>" + state_ut_province +
-										"<br><B>pin = </B>" + pin +
-										"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
-										"<br><B>h_latitude = </B>" + h_latitude +
-										"<br><B> h_longitude = </B>" +  h_longitude +
-										"<br><B>mobile_no = </B>" + mobile_no ;
+					var notification = "<B>entity_name = </B>" + entity_name +
+						"<br><B>address = </B>" + address +
+						"<br><B>district_city = </B>" + district_city +
+						"<br><B>state_ut_province = </B>" + state_ut_province +
+						"<br><B>pin = </B>" + pin +
+						"<br><B>notice_serverd_on = </B>" + notice_serverd_on +
+						"<br><B>h_latitude = </B>" + h_latitude +
+						"<br><B> h_longitude = </B>" + h_longitude +
+						"<br><B>mobile_no = </B>" + mobile_no;
 
 
-					if (pushpins != "")
-					{
+					if (pushpins != "") {
 						pushpins += "$$$$";
 					}
-					
+
 					pushpins += h_latitude + "$$$" + h_longitude + "$$$" + notification + "$$$" + "0" + "$$$" + "red" + "$$$" + "Quarantined";
-					
+
 					// var p_time_stamp = json_obj[row]['p_time_stamp']; 
 					// var latitude = json_obj[row].latitude; 
 					// var longitude = json_obj[row].longitude; 						
 					// var mobile_no = json_obj[row].mobile_no; 
 					// var movementSource = json_obj[row].movement_source1; 
-					
+
 					// mGridData.push([(row + 1), p_time_stamp, latitude, longitude, mobile_no, movementSource]);
 
-				
+
 
 					// var notification = "<B>Time Stamp = </B>" + p_time_stamp +									
 					// 					"<br><B>Latitude = </B>" + latitude +
 					// 					"<br><B>Longitude = </B>" + longitude +
 					// 					"<br><B>Mobile No = </B>" + mobile_no +
 					// 					"<br><B>Movement Source = </B>" + movementSource;
-					
+
 					// if (pushpins != "")
 					// {
 					// 	pushpins += "$$$$";
 					// }
-											
+
 					// var color = "red";
 					// if (movementSource === "BASE"){
 					// 	color = "green";
 					// } else if (movementSource === "CDR"){
 					// 	color = "blue";
 					// }
-					
+
 					// pushpins += latitude + "$$$" + longitude + "$$$" + notification + "$$$" + "0" + "$$$" + color + "$$$" + movementSource;
-					
+
 					// if ((row + 1) < json_obj.length){
 					// 	var latitudePlusOne = json_obj[row + 1].latitude; 
 					// 	var longitudePlusOne = json_obj[row + 1].longitude; 
-					
+
 					// 	if (lines != "")
 					// 	{
 					// 		lines += "$$$$";
 					// 	}
-						
+
 					// 	lines += latitude + "$$$" + longitude + "$$$" + latitudePlusOne + "$$$" + longitudePlusOne + "$$$" + color;
 					// }
 				}
 			}
-			
+
 			// if (oTable == null || oTable == "undefined"){
 			// 	oTable = $('#MovementGrid').dataTable( {
 			// 		"aLengthMenu": [[5, 10], [5, 10]],
@@ -674,7 +724,7 @@
 			// 			$("#MovementGrid").on("click", "tr[role='row']", function(){
 			// 				$("#MovementGrid tbody tr").removeClass('row_selected');        
 			// 				$(this).addClass('row_selected');
-			
+
 			// 				//var index = $(this).index();
 			// 				var sIndex = $(this).children('td:first-child').text();
 			// 				var index = parseInt(sIndex) - 1;
@@ -704,26 +754,26 @@
 			// 		]
 			// 	} );
 			// }
-			
+
 			// /// Assign data here
 			// $('#MovementGrid').dataTable().fnAddData(mGridData);
-			
-			if (pushpins != ""){				
+
+			if (pushpins != "") {
 				addMarker(pushpins, lines);
-			}else{
+			} else {
 				alert("No records found.");
 			}
-	   }
-		
-		function onMovementsRowClick(ctl) {	
-		  //alert(ctl.rowIndex);
-		  var index = ctl.rowIndex;
-		  if (index > 0){
-			index = index - 2;
-			showTooltipFromBackend(index);
-		  }
 		}
-		
+
+		function onMovementsRowClick(ctl) {
+			//alert(ctl.rowIndex);
+			var index = ctl.rowIndex;
+			if (index > 0) {
+				index = index - 2;
+				showTooltipFromBackend(index);
+			}
+		}
+
 		// END DB OPERATIONS
 		////////////////////////////////////	
 
@@ -737,8 +787,7 @@
 				var date = new Date();
 				date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 				var expires = "; expires=" + date.toGMTString();
-			}
-			else {
+			} else {
 				var expires = "";
 				document.cookie = name + "=" + value + expires + "; path=/";
 			}
@@ -782,10 +831,10 @@
 			window.print();
 		}
 
-		function initialize() {			
+		function initialize() {
 			mapLatLng = new google.maps.LatLng(12.9667, 77.5667);
 			directionsDisplay = new google.maps.DirectionsRenderer();
-			
+
 			var linkedMapZoom;
 			try {
 				linkedMapZoom = getCookie("FromOtherPage_MapZoom");
@@ -796,8 +845,7 @@
 						mapZoom = parseInt(linkedMapZoom);
 					}
 				}
-			}
-			catch (e) {
+			} catch (e) {
 				//catch and just suppress error
 			}
 
@@ -816,10 +864,9 @@
 						mapLatLng = new google.maps.LatLng(linkedlat, linkedlng);
 					}
 				}
-			}
-			catch (e) {
+			} catch (e) {
 				//catch and just suppress error
-			} 
+			}
 
 			//alert(mapLatLng);
 
@@ -840,15 +887,15 @@
 				zoomControlOptions: {
 					position: google.maps.ControlPosition.LEFT_BOTTOM
 				}
-			  };
-			  
+			};
+
 			map = new google.maps.Map(document.getElementById('map-canvas'),
-			  mapOptions);
-			  
+				mapOptions);
+
 
 			map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 
-			google.maps.event.addListener(map, 'click', function (event) {
+			google.maps.event.addListener(map, 'click', function(event) {
 				//            FNT_FromOtherPage_latlngCookie(event.latLng.lat(), event.latLng.lng());
 				//            //marker.setMap(null);
 				//            for (var i = 0, marker; marker = markers[i]; i++) {
@@ -866,12 +913,12 @@
 				onMapClick(event.latLng.lat(), event.latLng.lng());
 			});
 
-			google.maps.event.addListener(map, 'zoom_changed', function () {
+			google.maps.event.addListener(map, 'zoom_changed', function() {
 				var zoom = map.getZoom();
 				MapZoomCookie(zoom);
 			});
 
-			google.maps.event.addListener(map, 'center_changed', function () {
+			google.maps.event.addListener(map, 'center_changed', function() {
 				var mce = map.getCenter();
 				FNT_FromOtherPage_latlngCookie(mce.lat(), mce.lng());
 			});
@@ -926,7 +973,7 @@
 			});
 			*/
 			// Bias the SearchBox results towards current map's viewport.
-			map.addListener('bounds_changed', function () {
+			map.addListener('bounds_changed', function() {
 				searchBox.setBounds(map.getBounds());
 				//var sw = map.getBounds().getCenter();
 				//FNT_FromOtherPage_latlngCookie(sw.lat(), sw.lng());
@@ -934,9 +981,9 @@
 
 			// Listen for the event fired when the user selects a prediction and retrieve
 			// more details for that place.
-			searchBox.addListener('places_changed', function () {
+			searchBox.addListener('places_changed', function() {
 				// Clear out the old markers.
-				locationSearchMarkers.forEach(function (marker) {
+				locationSearchMarkers.forEach(function(marker) {
 					marker.setMap(null);
 				});
 				locationSearchMarkers = [];
@@ -949,12 +996,17 @@
 
 				var inputValue = input.value;
 				var latlngStr = inputValue.split(',', 2);
-				var latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
-				geocoder.geocode({ 'location': latlng }, function (results, status) {
+				var latlng = {
+					lat: parseFloat(latlngStr[0]),
+					lng: parseFloat(latlngStr[1])
+				};
+				geocoder.geocode({
+					'location': latlng
+				}, function(results, status) {
 					if (status === 'OK') {
 						if (results[0]) {
 							var points = [];
-							locationSearchMarkers.forEach(function (marker) {
+							locationSearchMarkers.forEach(function(marker) {
 								marker.setMap(null);
 							});
 							locationSearchMarkers = [];
@@ -990,7 +1042,7 @@
 
 				// For each place, get the icon, name and location.
 				var bounds = new google.maps.LatLngBounds();
-				places.forEach(function (place) {
+				places.forEach(function(place) {
 					if (!place.geometry) {
 						console.log("Returned place contains no geometry");
 						return;
@@ -1022,7 +1074,7 @@
 			});
 
 			//window.external.LoadMarkersOnMap();
-			
+
 			getQuarantineData();
 		}
 
@@ -1050,7 +1102,7 @@
 				arrDirectionsDisplayWithoutWaypoints[i].setMap(null);
 			}
 			arrDirectionsDisplayWithoutWaypoints = [];
-				 
+
 		}
 
 		function calcRoute(startLat, startLng, endLat, endLng, arrWayPoints) {
@@ -1071,12 +1123,12 @@
 						});
 					}
 				}
-			}    
-			
+			}
+
 			var request = {
 				origin: start,
 				destination: end,
-				provideRouteAlternatives: true,            
+				provideRouteAlternatives: true,
 				optimizeWaypoints: true,
 				region: "IN",
 				travelMode: google.maps.DirectionsTravelMode.DRIVING
@@ -1086,30 +1138,23 @@
 				request.waypoints = waypts;
 			}
 
-			directionsService.route(request, function (response, status) {
+			directionsService.route(request, function(response, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response);
 					directionsDisplay.setMap(map);
-				}
-				else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
+				} else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
 					alert("At least one of the locations specified in the requests's origin, destination could not be located.");
-				}
-				else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
+				} else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
 					alert("No route could be found between the origin and destination.");
-				}
-				else if (status == google.maps.DirectionsStatus.MAX_WAYPOINTS_EXCEEDED) {
+				} else if (status == google.maps.DirectionsStatus.MAX_WAYPOINTS_EXCEEDED) {
 					alert("Too many Directions waypoints were provided in the Directions Request. The maximum allowed waypoints is 8, plus the origin, and destination.");
-				}
-				else if (status == google.maps.DirectionsStatus.INVALID_REQUEST) {
+				} else if (status == google.maps.DirectionsStatus.INVALID_REQUEST) {
 					alert("Provided Directions request was invalid.");
-				}
-				else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+				} else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
 					alert("Webpage has sent too many requests within the allowed time period.");
-				}
-				else if (status == google.maps.DirectionsStatus.REQUEST_DENIED) {
+				} else if (status == google.maps.DirectionsStatus.REQUEST_DENIED) {
 					alert("Webpage is not allowed to use the directions service.");
-				}
-				else if (status == google.maps.DirectionsStatus.UNKNOWN_ERROR) {
+				} else if (status == google.maps.DirectionsStatus.UNKNOWN_ERROR) {
 					alert("An unknown error occurred.");
 				}
 			});
@@ -1117,13 +1162,16 @@
 
 		function addMarkerInRouteMap(serialNo, latLng, notification) {
 
-			
-			marker = new google.maps.Marker
-			({
+
+			marker = new google.maps.Marker({
 				position: latLng,
 				map: map,
 				labelAnchor: new google.maps.Point(22, 0),
-				labelStyle: { opacity: 0.5, color: '#FF0000', whiteSpace: 'nowrap' },
+				labelStyle: {
+					opacity: 0.5,
+					color: '#FF0000',
+					whiteSpace: 'nowrap'
+				},
 				//draggable: true,
 				//animation: google.maps.Animation.DROP,
 				title: "Click to show more information"
@@ -1136,11 +1184,11 @@
 
 			var iw = new google.maps.InfoWindow();
 			var toolTipText = '<div width="300px">' + notification + '</div>';
-			
+
 			infowindows.push(iw);
 
-			google.maps.event.addListener(marker, 'click', (function (marker, i) {
-				return function () {
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+				return function() {
 					for (var i = 0; i < infowindows.length; i++) {
 						infowindows[i].close();
 					}
@@ -1152,6 +1200,7 @@
 		}
 
 		var routeCount = 0;
+
 		function plotRoutesWithoutWayPoints(routes) {
 			var delimiter = "$$$$";
 			routeCount = 0;
@@ -1205,7 +1254,7 @@
 						travelMode: google.maps.DirectionsTravelMode.DRIVING
 					};
 
-					directionsService.route(request, function (response, status) {
+					directionsService.route(request, function(response, status) {
 						var dis = "0";
 						if (status == google.maps.DirectionsStatus.OK) {
 							directionsDisplayWithoutWaypoints.setDirections(response);
@@ -1216,30 +1265,22 @@
 							routeCount += 1;
 							if (routeCount < arrayRoutes.length) {
 								calcRouteWithoutWaypoints(arrayRoutes);
-							}
-							else {
+							} else {
 								//window.external.StopLoader();
 							}
-						}
-						else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
+						} else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
 							alert("At least one of the locations specified in the requests's origin, destination could not be located.");
-						}
-						else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
+						} else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
 							alert("No route could be found between the origin and destination.");
-						}
-						else if (status == google.maps.DirectionsStatus.MAX_WAYPOINTS_EXCEEDED) {
+						} else if (status == google.maps.DirectionsStatus.MAX_WAYPOINTS_EXCEEDED) {
 							alert("Too many Directions waypoints were provided in the Directions Request. The maximum allowed waypoints is 8, plus the origin, and destination.");
-						}
-						else if (status == google.maps.DirectionsStatus.INVALID_REQUEST) {
+						} else if (status == google.maps.DirectionsStatus.INVALID_REQUEST) {
 							alert("Provided Directions request was invalid.");
-						}
-						else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+						} else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
 							alert("Webpage has sent too many requests within the allowed time period.");
-						}
-						else if (status == google.maps.DirectionsStatus.REQUEST_DENIED) {
+						} else if (status == google.maps.DirectionsStatus.REQUEST_DENIED) {
 							alert("Webpage is not allowed to use the directions service.");
-						}
-						else if (status == google.maps.DirectionsStatus.UNKNOWN_ERROR) {
+						} else if (status == google.maps.DirectionsStatus.UNKNOWN_ERROR) {
 							alert("An unknown error occurred.");
 						}
 
@@ -1247,9 +1288,8 @@
 							//window.external.StopLoader();
 						}
 					});
-				}            
-			}
-			catch (err) {
+				}
+			} catch (err) {
 				//window.external.StopLoader();
 				alert(err.message);
 			}
@@ -1264,7 +1304,7 @@
 			}
 		}
 
-		var removeChilds = function (node) {
+		var removeChilds = function(node) {
 			var last;
 			while (last = node.lastChild) node.removeChild(last);
 		};
@@ -1280,7 +1320,9 @@
 			var cdrPhoneNo;
 
 
-			
+
+
+
 
 			try {
 
@@ -1299,9 +1341,9 @@
 				var points = [];
 
 				oms = new OverlappingMarkerSpiderfier(map, {
-					markersWontMove: true,   // we promise not to move any markers, allowing optimizations
-					markersWontHide: true,   // we promise not to change visibility of any markers, allowing optimizations
-					basicFormatEvents: true  // allow the library to skip calculating advanced formatting information
+					markersWontMove: true, // we promise not to move any markers, allowing optimizations
+					markersWontHide: true, // we promise not to change visibility of any markers, allowing optimizations
+					basicFormatEvents: true // allow the library to skip calculating advanced formatting information
 				});
 
 				for (i = 0; i < tempPushpins.length; i++) {
@@ -1314,13 +1356,12 @@
 						color = arr[4];
 						cdrPhoneNo = arr[5];
 
-						
+
 
 						var latLng = new google.maps.LatLng(lat, lng);
 						var toolTipText = '<div width="300px">' + txt + '</div>';
 
-						marker = new google.maps.Marker
-						({
+						marker = new google.maps.Marker({
 							position: latLng,
 							map: map,
 							//draggable: true,
@@ -1347,8 +1388,8 @@
 						markers.push(marker);
 						oms.addMarker(marker);
 
-						google.maps.event.addListener(marker, 'spider_click', (function (marker, i) {
-							return function () {
+						google.maps.event.addListener(marker, 'spider_click', (function(marker, i) {
+							return function() {
 								showTooltip(tempPushpins[i], i);
 							}
 						})(marker, i));
@@ -1363,7 +1404,7 @@
 					}
 				}
 
-				if (lines != "") {                
+				if (lines != "") {
 					var tempMovementLines = lines.split(delimiter);
 					var point1, point2, point3, point4;
 
@@ -1378,10 +1419,15 @@
 							point4 = parseFloat(arr[3]);
 							color = arr[4];
 
-							var arrLatLong = [
-						  { lat: point1, lng: point2 },
-						  { lat: point3, lng: point4 }
-						];
+							var arrLatLong = [{
+									lat: point1,
+									lng: point2
+								},
+								{
+									lat: point3,
+									lng: point4
+								}
+							];
 							var movementLine = new google.maps.Polyline({
 								path: arrLatLong,
 								geodesic: true,
@@ -1395,17 +1441,66 @@
 						}
 					}
 				}
-				
+
 				AutoCenter(points);
 				//endDragMarkerCS(lat, lng);
 
-			}
-			catch (err) {
+			} catch (err) {
 				alert(err.message);
 			}
 		}
 
+
+		// redirect to selected data [location grid]
+		function redirectToselectedData(targetDatetime) {
+
+			var nextIteration = false;
+
+
+			// initially remove class
+			$("#LocationGrid tbody tr ").removeClass("row_selected");
+
+			$.each($("#LocationGrid tbody tr "), function() {
+
+				//get dateTime value of indvidual row
+				rowDateTime = $(this).html().split("</td>")[5].split(">")[1];
+
+
+				if (targetDatetime == rowDateTime) {
+					$(this).addClass('row_selected');
+					return false;
+				} else {
+					$(this).removeClass('row_selected');
+				}
+
+
+				//if the current row is last child then click next button programatically.
+				if ($(this).is(':last-child') == true) {
+					$("#LocationGrid_next").trigger("click");
+					nextIteration = true;
+				}
+
+
+				//if the controller is in last row then click first button programatically.
+				if ($('#LocationGrid').DataTable().row(':last').data()[5] == rowDateTime) {
+					$("[data-dt-idx=1]").trigger("click");
+				}
+
+			})
+
+
+			//recall function (redirectToselectedData) untill the targetDatetime is equal to rowDateTime 
+			if (nextIteration) {
+				redirectToselectedData(targetDatetime);
+			}
+
+		}
+
+
 		function showTooltip(tempPushpins, index) {
+
+			//intialize variable
+			var nextIteartion = false;
 
 			var iw = new google.maps.InfoWindow();
 
@@ -1413,25 +1508,46 @@
 				infowindows[i].close();
 			}
 
-	//        var infowindow = new google.maps.InfoWindow({
-	//            maxWidth: 350
-	//        });
+			//        var infowindow = new google.maps.InfoWindow({
+			//            maxWidth: 350
+			//        });
 
 			var arr = tempPushpins.split("$$$");
 			var lat = arr[0];
 			var lng = arr[1];
 			var txt = arr[2];
 			var o_azimuth = arr[3];
-			
+
 			var toolTipText = '<div width="300px">' + txt + '</div>';
 
 			iw.setContent(toolTipText);
 			iw.open(map, markers[index]);
 
 			infowindows.push(iw);
-			
+
+
+			/**************** display selected record by map icon   **********************/
+
+			var mobile_no = arr[2].split("</B>")[9];
+
+			var targetDatetime = arr[2].split("</B>")[6].split("<br>")[0];
+
+
+			//display images
+			get_history_images(mobile_no);
+
+
+			/** selected row which is equal to maps */
+			redirectToselectedData(targetDatetime);
+
+
+
+
+			/************************************************************************* */
+
+
 			/*
-			if (o_azimuth == "0") {
+			if (o_azimuth == "0") 
 				return;
 			}
 
@@ -1458,7 +1574,7 @@
 			*/
 		}
 
-		function showIndividualAzimuthOnDemand(lat, lng, starts, azimuth, ends){
+		function showIndividualAzimuthOnDemand(lat, lng, starts, azimuth, ends) {
 			ClearAzimuthsFromMap();
 			var points = [];
 			points.push(new google.maps.LatLng(lat, lng));
@@ -1493,18 +1609,16 @@
 					if (points.length == 1) {
 						map.setZoom(16);
 					}
-				}
-				else {
+				} else {
 					bounds.extend(new google.maps.LatLng(12.9667, 77.5667));
 					map.fitBounds(bounds);
-					google.maps.event.addListenerOnce(map, 'bounds_changed', function (event) {
+					google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
 						if (map.getZoom() > 12) {
 							map.setZoom(12);
 						}
 					});
 				}
-			}
-			catch (e) {
+			} catch (e) {
 				alert(e.Description);
 			}
 		}
@@ -1574,7 +1688,7 @@
 					fillOpacity: 0.6
 				});
 				polys.push(poly);
-			}        
+			}
 		}
 
 		function showAzimuthOnDemand(lat, lng, starts, azimuth, ends) {
@@ -1588,7 +1702,11 @@
 			//}
 			//polys = [];
 
-			var slices = [[starts, ends, 'red']], i = 0, radiusMeters = 200;
+			var slices = [
+					[starts, ends, 'red']
+				],
+				i = 0,
+				radiusMeters = 200;
 
 			for (; i < slices.length; i++) {
 				var path = getArcPath(latLng, radiusMeters, slices[i][0], slices[i][1]);
@@ -1611,9 +1729,9 @@
 
 		function getArcPath(center, radiusMeters, startAngle, endAngle, direction) {
 			var point, previous,
-			atEnd = false,
-			points = Array(),
-			a = startAngle;
+				atEnd = false,
+				points = Array(),
+				a = startAngle;
 			while (true) {
 				point = google.maps.geometry.spherical.computeOffset(center, radiusMeters, a);
 				points.push(point);
@@ -1631,7 +1749,7 @@
 			return points;
 		}
 
-		function ClearAzimuthsFromMap(){
+		function ClearAzimuthsFromMap() {
 			for (var i = 0; i < polys.length; i++) {
 				polys[i].setMap(null);
 			}
@@ -1644,24 +1762,22 @@
 			endDragMarkerCS(pos.lat(), pos.lng());
 		}
 
-		function onMapClick(lat, long) {				
+		function onMapClick(lat, long) {
 			//window.external.onMapClick(lat, long);
-		}	
+		}
 	</script>
 
 	<!-- jQuery -->
-	<script src="../../plugins/jquery/jquery.min.js"></script>	
+	<script src="../../plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>	
+	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- overlayScrollbars -->
 	<script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="../../dist/js/adminlte.js"></script>
-	
+
 	<!-- DataTables -->
 	<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 	<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 	<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
-	
